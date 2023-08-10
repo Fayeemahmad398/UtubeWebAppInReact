@@ -1,0 +1,286 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+body {
+  background-color: #f2f2f2;
+}
+#navbar {
+  display: flex;
+  padding: 12px;
+  background-color: #fff;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(222, 215, 215);
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+.togglelight {
+  height: 30px;
+  width: 30px;
+  background: #ff2626;
+
+  border-radius: 50%;
+}
+
+#navbar-left {
+  display: flex;
+  gap: 20px;
+}
+#navbar-left p {
+  font-size: 10px;
+  margin-left: -16px;
+  margin-top: -6px;
+  color: gray;
+}
+#utubelogo img {
+  width: 100px;
+}
+#navbar-mid #search {
+  width: 500px;
+  border: 1px solid lightgray;
+  padding: 10px;
+  border-radius: 0;
+  outline: none;
+  /* font-size: 18px; */
+}
+#navbar-mid button {
+  padding: 10px 20px;
+  border: 1px solid rgb(223, 219, 219);
+  margin-left: -6px;
+  border-left: none;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+#navbar-mid #mic {
+  padding: 12px 14px;
+  background-color: #f9f4f4;
+  border-radius: 50%;
+}
+.channel-logo {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+#navbar-right {
+  display: flex;
+  gap: 30px;
+  margin-left: 8px;
+  text-align: center;
+  justify-content: center;
+}
+#navbar-right img {
+  width: 24px;
+}
+#navbar-right #alpha {
+  background-color: black;
+  border-radius: 50%;
+  padding: 6px 8px;
+  margin-top: -6px;
+  color: white;
+}
+
+#content {
+  background-color: #f2f2f2;
+  padding: 12px;
+  margin-left: 160px;
+  margin-top: 50px;
+}
+#content #main {
+  display: flex;
+  margin-right: 100px;
+  margin-top: 12px;
+  /* width: 90%; */
+  gap: 16px;
+}
+#content img {
+  width: 360px;
+  height: 220px;
+}
+#main p {
+  margin-top: 20px;
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 12px;
+  color: #606060;
+}
+#main h3 {
+  font-family: "Roboto", "Arial", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #030303;
+}
+
+#mainT {
+  background-color: #fff;
+  padding: 8px;
+  margin-top: 20px;
+  border: 2px solid red;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+}
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 100px;
+  color: #030303;
+  /* overflow-x: scroll; */
+  width: 99%;
+  border: 2px solid red;
+}
+/* .categories::-webkit-scrollbar {
+  display: none;
+} */
+.oneCategory {
+  background: #dfdcdc;
+  color: black;
+  margin: 0px 10px;
+  white-space: nowrap;
+  border-radius: 10px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 0px 10px;
+  font-size: 13px;
+}
+.imges {
+  width: 100%;
+  height: 200px;
+  border-radius: 20px;
+  /* margin-bottom: 10px; */
+}
+.onevideobox {
+  width: 95%;
+  border: 2px solid black;
+  padding: 5px;
+  margin: 20px 0px;
+  background: #efe8e8;
+  border-radius: 20px;
+}
+#trendVdo #mainT img {
+  width: 290px;
+  height: 160px;
+}
+#trendVdo #mainT h3 {
+  font-size: 14px;
+  margin: 6px 0;
+  height: 35px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+#flexDiv {
+  margin-top: 5px;
+  display: flex;
+  font-size: 14px !important;
+  margin-left: 55px;
+}
+#duration {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+  margin-top: -30px;
+}
+#duration #durP {
+  color: #f2f2f2;
+  font-size: 12px;
+  border-radius: 4px;
+  background-color: #070a12;
+  padding: 2px 4px;
+}
+#filter-main {
+  width: 400px;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  margin-top: 20px;
+  /* display: none; */
+  margin-left: 16px;
+}
+#filter-main #one {
+  display: flex;
+  gap: 10px;
+  width: min-content;
+  margin-bottom: 28px;
+  align-items: center;
+}
+#one h3 {
+  color: #1a1919;
+}
+#filter-main img {
+  width: 28px;
+  height: 28px;
+}
+#filter-main #two {
+  display: flex;
+  width: 600px;
+  justify-content: space-between;
+}
+#filter-main h4 {
+  color: rgb(42, 41, 41);
+  margin-bottom: 12px;
+  /* border-bottom: 1px solid lightgray; */
+}
+#filter-main p {
+  color: #6b6969;
+  margin: 14px 0;
+  font-size: 16px;
+}
+#zero {
+  display: none;
+}
+.channelimglogo {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 2px solid red;
+  gap: 10px;
+}
+.channelsName {
+  font-size: 14px !important;
+  margin-left: 55px;
+}
+.channelNameOnHome {
+  /* margin-top: 5px; */
+}
+.homelogotitle {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 850px) {
+  #mainT {
+    grid-template-columns: 1fr 1fr;
+  }
+  #mic {
+    display: none;
+  }
+  .cameraimg {
+    display: none;
+  }
+  #navbar {
+    justify-content: space-around;
+  }
+  #search {
+    width: 70% !important;
+  }
+}
+@media (max-width: 450px) {
+  #mainT {
+    grid-template-columns: 1fr;
+  }
+  .imges {
+    height: 150px;
+  }
+}

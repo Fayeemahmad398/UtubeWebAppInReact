@@ -1,6 +1,10 @@
 import Navbar from "./Components/Navabar";
 import CategoryData from "./Components/CategoryData";
 import "./Components/style.css";
+
+
+
+
 import Home from "./Components/Home";
 import { Routes, Route } from "react-router";
 import VideoPlay from "./Components/VideoPlay";

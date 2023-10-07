@@ -2,6 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { useNavigate } from "react-router";
+
+
+
+
 import MyContext from "./GlobalContext";
 import { useContext } from "react";
 const AllCategory = () => {

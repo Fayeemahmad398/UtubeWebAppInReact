@@ -44,7 +44,7 @@
   border-radius: 0;
   outline: none;
   height: 40px;
-  border: 0.1px solid;
+  border: 0.1px solid grey;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   font-size: 17px;
@@ -53,7 +53,7 @@
 #navbar-mid button {
   height: 40px;
   width: 60px;
-  border: 1px solid;
+  border: 1px solid grey;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }

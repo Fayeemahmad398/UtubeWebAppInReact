@@ -13,7 +13,19 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 200px;
+transition: 1s;
+}
 
+.video-box-here:hover{
+  cursor: pointer;
+  transform: scale(1.03);
+  
+}
+.viewMonth{
+  color: rgb(107, 106, 106);
+}
+.channel-name-{
+  color: rgb(127, 124, 124)
 }
 .img-inner-side {
   /* border: 3px solid red; */
@@ -46,9 +58,6 @@
     width: 100%;
     margin: 5px auto;
 
-  }
-  .img-inner-side {
-    /* width: 100%; */
   }
   .img-inner-side img {
     border-radius: 0px;

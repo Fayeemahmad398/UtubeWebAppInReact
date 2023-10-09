@@ -65,7 +65,18 @@ const Navbar = () => {
           <div className="notify-icon">
             <NotificationsNoneIcon />
           </div>
-          <div>
+          <div
+            style={{
+              height: "35px",
+              width: "35px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              background: "black",
+              borderRadius:"100%"
+            }}
+          >
             <h4 id="alpha">F</h4>
           </div>
         </div>

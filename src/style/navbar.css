@@ -44,13 +44,16 @@
   border-radius: 0;
   outline: none;
   height: 40px;
+  border: 0.1px solid;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   font-size: 17px;
+
 }
 #navbar-mid button {
   height: 40px;
   width: 60px;
+  border: 1px solid;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
@@ -59,6 +62,9 @@
   border-radius: 50%;
   padding: 10px;
   margin-left: 10px;
+}
+#navbar-mid #mic :hover{
+  cursor: pointer;
 }
 /* ------------------------------ */
 
@@ -79,11 +85,8 @@
 }
 
 #navbar-right #alpha {
-  background-color: black;
-  border-radius: 50%;
-  padding: 6px 8px;
-  margin-top: -6px;
   color: white;
+ 
 }
 /* ------------------------------- */
 @media (max-width: 500px) {

@@ -30,6 +30,11 @@ body {
   background: #efe8e8;
   border-radius: 20px;
   position: relative;
+  transition: 1s;
+}
+.onevideobox:hover {
+  cursor: pointer;
+  transform: scale(1.02);
 }
 #trendVdo #mainT img {
   width: 290px;
@@ -108,7 +113,7 @@ body {
   display: none;
 }
 .channelimglogo {
-  margin-top: 5px;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;

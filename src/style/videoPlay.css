@@ -25,6 +25,7 @@ iframe {
 }
 .timeandcount {
   margin: 10px;
+  color: rgb(141, 139, 139);
 }
 .seeless:hover {
   cursor: pointer;
@@ -32,6 +33,9 @@ iframe {
 .titleContent {
   margin-top: 10px;
   margin-bottom: 5px;
+}
+.titleContent strong {
+  color: rgb(141, 139, 139);
 }
 h5 {
   font-size: medium;
@@ -45,7 +49,6 @@ h5 {
   width: 100%;
 }
 .leftOfBox {
-  border: 2px solid black;
   display: flex;
   padding: 3px;
   gap: 5px;
@@ -88,6 +91,7 @@ h5 {
   flex-direction: row;
   gap: 20px;
 }
+
 .likes-dislike {
   display: flex;
   flex-direction: row;
@@ -139,13 +143,17 @@ h5 {
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   padding: 0px;
+  transition: 1s;
+}
+.one-video-cate:hover{
+  transform: scale(1.03);
 }
 #durations {
   font-size: 14px;
   position: absolute;
   left: 20px;
   color: white;
-  bottom: 10px;
+  bottom: 5px;
 }
 
 #root {
@@ -154,7 +162,7 @@ h5 {
   /* border: 5px solid blue; */
   margin: auto;
 }
-.viewMonth strong{
+.viewMonth strong {
   width: 90px;
   margin-left: 40px;
 }

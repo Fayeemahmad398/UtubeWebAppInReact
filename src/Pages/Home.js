@@ -83,7 +83,7 @@ const Home = () => {
               <div className="homelogotitle">
                 <div className="channelimglogo">
                   <img className="channel-logo" src={obj.urllogo} alt="" />
-                  <h5>{obj.snippet.title}</h5>
+                  <h5 className="title-of-video">{obj.snippet.title}</h5>
                 </div>
                 <div className="channelNameOnHome">
                   <p className="channelsName">{obj.snippet.channelTitle}</p>

@@ -126,8 +126,10 @@ const CategoryData = () => {
 
               <div className="homelogotitle">
                 <div className="channelimglogo">
-                  <img className="channel-logo" src={obj.urllogo} alt="" />
-                  <h5>{obj.snippet.title.slice(0, 60)}.....</h5>
+                    <img className="channel-logo" src={obj.urllogo ?obj.urllogo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJaQ6dxqPCDW3iP7iLU1-zeESsjNGopFwRfQ&usqp=CAU"} alt="" />
+                  <h5 className="title-of-video">
+                    {obj.snippet.title.slice(0, 60)}.....
+                  </h5>
                 </div>
                 <div className="channelNameOnHome">
                   <p className="channelsName">{obj.snippet.channelTitle}</p>

@@ -1,7 +1,7 @@
 import Navbar from "./Components/Navabar";
 import CategoryData from "./Pages/CategoryData";
 import "./style/home.css";
-import "./style/searchDataOnQuery.css"
+import "./style/searchDataOnQuery.css";
 
 import Home from "./Pages/Home";
 import { Routes, Route } from "react-router";

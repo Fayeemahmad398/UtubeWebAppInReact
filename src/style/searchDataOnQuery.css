@@ -7,11 +7,15 @@
   flex-direction: column;
   gap: 20px;
 }
+.descriptions{
+  font-size: 17px;
+}
 .video-box-here {
   border: 2px dotted rgb(90, 110, 59);
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 200px;
+
 }
 .img-inner-side {
   /* border: 3px solid red; */
@@ -32,9 +36,10 @@
 .durationsOnSearch {
   position: absolute;
   /* border: 2px solid rgb(211, 50, 85); */
-  left: 0px;
-  bottom: 0px;
+  left: 5px;
+  bottom: 5px;
   color: white;
+  font-size: small;
 }
 /* --------------------------------------- */
 @media (max-width: 1000px) {
@@ -42,7 +47,8 @@
     grid-template-columns: 1fr;
     height: 300px;
     width: 100%;
-    margin: 20px auto;
+    margin: 5px auto;
+
   }
   .img-inner-side {
     /* width: 100%; */
@@ -65,9 +71,10 @@
     gap: 40px;
   }
   .descriptions {
-    margin-top:3px;
+    display: none;
   }
+  .channel-name-{
+    font-size: 15px !important;
 }
 
-@media (max-width: 500px) {
 }

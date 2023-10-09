@@ -50,7 +50,7 @@ const VideoPlay = () => {
               <div className="leftOfBox">
                 <img src={useContextData.playingVideo.urllogo} alt="" />
                 <div className="subscriber-channel">
-                  <strong>
+                  <strong >
                     {useContextData.playingVideo.snippet.channelTitle}
                   </strong>
                   <p>45k Subscribers</p>

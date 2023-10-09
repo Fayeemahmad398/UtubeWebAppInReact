@@ -4,15 +4,12 @@
   box-sizing: border-box;
 }
 body {
-  background-color: #f2f2f2;
-  font-family:  sans-serif;
+  font-family: sans-serif;
 }
 
 #mainT {
-  background-color: #fff;
   padding: 8px;
   margin-top: 120px;
-  /* border: 2px solid rgb(35, 82, 238); */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
@@ -111,12 +108,15 @@ body {
   display: none;
 }
 .channelimglogo {
-  margin-top: 20px;
+  margin-top: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
   border: 2px solid red;
   gap: 10px;
+}
+.title-of-video {
+  font-size: 15px;
 }
 .channelsName {
   font-size: 14px !important;
@@ -157,5 +157,4 @@ body {
   #mainT {
     padding: 0px;
   }
-  
 }

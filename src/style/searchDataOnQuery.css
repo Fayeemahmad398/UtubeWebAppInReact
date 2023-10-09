@@ -1,6 +1,5 @@
 .category-data {
   width: 80vw;
-  /* border: 2px dotted rgb(249, 69, 14); */
   margin: auto;
   margin-top: 120px;
   display: flex;
@@ -11,7 +10,6 @@
   font-size: 17px;
 }
 .video-box-here {
-  border: 2px dotted rgb(90, 110, 59);
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 200px;
@@ -30,7 +28,6 @@
   border-radius: 10px;
 }
 .right-ofSearchDataOne {
-  border: 3px dotted wheat;
   width: 575px;
 }
 .durationsOnSearch {
@@ -57,7 +54,6 @@
     border-radius: 0px;
   }
   .right-ofSearchDataOne {
-    border: 3px dotted wheat;
     margin-top: 5px;
     width: 100%;
   }

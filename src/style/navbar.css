@@ -3,7 +3,6 @@
   padding: 12px;
   background-color: #fff;
   justify-content: space-between;
-  /* border-bottom: 4px solid rgb(238, 12, 12); */
   align-items: center;
   position: fixed;
   top: 0;
@@ -32,7 +31,6 @@
 }
 
 #navbar-mid {
-  border: 2px solid yellow;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -42,7 +40,6 @@
 
 #navbar-mid #search {
   width: 50%;
-  border: 1px solid rgb(220, 56, 56);
   padding: 10px;
   border-radius: 0;
   outline: none;
@@ -52,7 +49,6 @@
   font-size: 17px;
 }
 #navbar-mid button {
-  border: 1px solid rgb(238, 29, 29);
   height: 40px;
   width: 60px;
   border-top-right-radius: 20px;
@@ -61,14 +57,12 @@
 #navbar-mid #mic {
   background-color: #f9f4f4;
   border-radius: 50%;
-  border: 1px solid tan;
   padding: 10px;
   margin-left: 10px;
 }
 /* ------------------------------ */
 
 #navbar-right {
-  border: 2px solid red;
   display: flex;
   gap: 30px;
   margin-left: 8px;

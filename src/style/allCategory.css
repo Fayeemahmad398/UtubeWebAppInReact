@@ -5,7 +5,6 @@
   margin: auto;
   margin-top: 90px;
   color: #030303;
-  border: 2px solid rgb(228, 44, 44);
   position: fixed;
   top: -20px;
   left: 0px;
@@ -29,11 +28,9 @@
   align-items: center;
   padding: 0px 10px;
   font-size: 12px;
-  border: 2px dotted red;
   margin: 0px 20px;
 }
 .btnsarrow {
-  border: 1px solid red;
   height: 30px;
   width: 30px;
   position: absolute;

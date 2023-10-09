@@ -1,50 +1,27 @@
 import Navbar from "./Components/Navabar";
-import CategoryData from "./Components/CategoryData";
-import "./Components/style.css";
+import CategoryData from "./Pages/CategoryData";
+import "./style/home.css";
+import "./style/searchDataOnQuery.css"
 
-
-
-
-import Home from "./Components/Home";
+import Home from "./Pages/Home";
 import { Routes, Route } from "react-router";
-import VideoPlay from "./Components/VideoPlay";
-import "./Components/videoPage.css";
-import MyContext from "./Components/GlobalContext";
+import VideoPlay from "./Pages/VideoPlay";
+import "./style/videoPlay.css";
 import AllCategory from "./Components/AllCategory";
-import "./Components/CategoryData.css";
-import {
-  calculateViewCounts,
-  parseISO8601Duration,
-  CalculateLikeAndComment,
-  calculateTime,
-} from "./Components/Home";
-import SearchDataOnQuery from "./Components/SearchDataOnQuery";
-import { useContext } from "react";
+import "./style/CategoryData.css";
+import SearchDataOnQuery from "./Pages/SearchDataOnQuery";
 
 const App = () => {
   return (
     <div>
-      <MyContext.Provider
-        value={{
-          calculateViewCounts: calculateViewCounts,
-          calculateTime: calculateTime,
-          parseISO8601Duration: parseISO8601Duration,
-          calculateTime: calculateTime,
-          calculateViewCounts: calculateViewCounts,
-          CalculateLikeAndComment: CalculateLikeAndComment,
-        }}
-      >
-        <Navbar />
-        <AllCategory />
-        <Routes>
-          <Route path="/categoryData" element={<CategoryData />} />
-
-          <Route path="/" element={<Home />} />
-          <Route path={`/VideoPlay`} element={<VideoPlay />} />
-
-          <Route path={"/SearchDataOnQuery"} element={<SearchDataOnQuery />} />
-        </Routes>
-      </MyContext.Provider>
+      <Navbar />
+      <AllCategory />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/categoryData" element={<CategoryData />} />
+        <Route path={`/VideoPlay`} element={<VideoPlay />} />
+        <Route path={"/SearchDataOnQuery"} element={<SearchDataOnQuery />} />
+      </Routes>
     </div>
   );
 };

@@ -1,17 +1,16 @@
-import { useState } from "react";
 import { FaMicrophone, FaSearch, FaToggleOn } from "react-icons/fa";
-import { useContext } from "react";
-import MyContext from "./GlobalContext";
 import { useNavigate } from "react-router";
+import { useMyContextFuncs } from "../myContext/MyContext";
+import "../style/navbar.css";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+
 const Navbar = () => {
-  const [search, setSearch] = useState("");
-  const myGlobalObj = useContext(MyContext);
-  const api_key = process.env.REACT_APP_UTUBEKEY;
   const navigator = useNavigate();
-  console.log(myGlobalObj);
+
+  const useContextData = useMyContextFuncs();
 
   function handleKeysDown(event) {
-    console.log(event.key);
+    console.log(useContextData);
     if (event.key == "Enter") {
       navigator("/SearchDataOnQuery");
     }
@@ -21,9 +20,6 @@ const Navbar = () => {
     <div>
       <div id="navbar">
         <div id="navbar-left">
-          <div id="drawer">
-            <FaToggleOn className="togglelight" />
-          </div>
           <div id="utubelogo">
             <img
               src="https://logodownload.org/wp-content/uploads/2014/10/youtube-logo-9.png"
@@ -36,12 +32,11 @@ const Navbar = () => {
         <div id="navbar-mid">
           <input
             type="text"
-            value={search}
+            value={useContextData.searchTerm}
             placeholder="Search"
             id="search"
             onChange={(event) => {
-              setSearch(event.target.value);
-              myGlobalObj.searchTerm = event.target.value;
+              useContextData.setSearchTerm(event.target.value);
             }}
             onKeyDown={(event) => {
               handleKeysDown(event);
@@ -61,18 +56,18 @@ const Navbar = () => {
         </div>
 
         <div id="navbar-right">
-          <span className="cameraimg">
+          <div className="cameraimg">
             <img
               src="https://tse2.mm.bing.net/th?id=OIP.taACaGo1_28G9E-UqijqSgHaEo&pid=Api&P=0"
               alt=""
             />
-          </span>
-          <span>
-            <i class="fa-regular fa-bell"></i>
-          </span>
-          <span>
+          </div>
+          <div className="notify-icon">
+            <NotificationsNoneIcon />
+          </div>
+          <div>
             <h4 id="alpha">F</h4>
-          </span>
+          </div>
         </div>
       </div>
     </div>

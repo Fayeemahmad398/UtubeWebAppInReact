@@ -1,5 +1,5 @@
-import MyContext from "./GlobalContext";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
 import {
   FaThumbsUp,
   FaThumbsDown,
@@ -8,60 +8,54 @@ import {
   FaHandHoldingUsd,
 } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import { useMyContextFuncs } from "../myContext/MyContext";
 
 const VideoPlay = () => {
   const [seeMore, setSeeMore] = useState(false);
-  let likes;
+  const useContextData = useMyContextFuncs();
 
-  const [playingVideo, setPlayVideo] = useState(null);
   const navigator = useNavigate();
 
-  const myGlobalObj = useContext(MyContext);
-  const relaventData = myGlobalObj.relaventData;
-  console.log(myGlobalObj);
-
   useEffect(() => {
-    if (myGlobalObj.playingVideo) {
-      setPlayVideo(myGlobalObj.playingVideo);
+    if (useContextData.playingVideo) {
+      useContextData.setPlayingVideo(useContextData.playingVideo);
     } else {
       navigator("/");
     }
   }, []);
-  console.log(playingVideo);
 
   return (
     <>
-      {playingVideo && (
+      {useContextData.playingVideo && (
         <div className="videoPage">
-          {console.log(myGlobalObj)}
+          {console.log(useContextData)}
           <div className="iframeSide">
             <iframe
               width="560"
               height="315"
               src={`https://www.youtube.com/embed/${
-                typeof playingVideo.id === "string"
-                  ? playingVideo.id
-                  : playingVideo.id.videoId
+                typeof useContextData.playingVideo.id == "string"
+                  ? useContextData.playingVideo.id
+                  : useContextData.playingVideo.id.videoId
               }`}
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen
             ></iframe>
-            {console.log(
-              typeof playingVideo.id === "string"
-                ? playingVideo.id
-                : playingVideo.id.videoId
-            )}
-            <div className="titleContent">{playingVideo.snippet.title}</div>
+            <div className="titleContent">
+              {useContextData.playingVideo.snippet.title}
+            </div>
             <div className="like-channel-icons">
               <div className="leftOfBox">
-                <img src={playingVideo.urllogo} alt="" />
+                <img src={useContextData.playingVideo.urllogo} alt="" />
                 <div className="subscriber-channel">
-                  <strong>{playingVideo.snippet.channelTitle}</strong>
+                  <strong>
+                    {useContextData.playingVideo.snippet.channelTitle}
+                  </strong>
                   <p>45k Subscribers</p>
                 </div>
-                <button>subscriber</button>
+                <button className="subscribebtn">subscriber</button>
               </div>
               <div className="rightOfBox">
                 <div className="likes-dislike">
@@ -69,8 +63,8 @@ const VideoPlay = () => {
                     <FaThumbsUp />
                   </strong>
                   <strong>
-                    {myGlobalObj.CalculateLikeAndComment(
-                      playingVideo.statistics.likeCount
+                    {useContextData.CalculateLikeAndComment(
+                      useContextData.playingVideo.statistics.likeCount
                     )}
                   </strong>
                   |
@@ -95,20 +89,22 @@ const VideoPlay = () => {
             </div>
             <div className="timeandcount">
               <strong>
-                {myGlobalObj.calculateViewCounts(
-                  playingVideo.statistics.viewCount
+                {useContextData.calculateViewCounts(
+                  useContextData.playingVideo.statistics.viewCount
                 )}
                 {".  "}
               </strong>
               <strong>
-                {myGlobalObj.calculateTime(playingVideo.snippet.publishedAt)}{" "}
+                {useContextData.calculateTime(
+                  useContextData.playingVideo.snippet.publishedAt
+                )}{" "}
                 ago
               </strong>
             </div>
             <div>
               {seeMore ? (
                 <div className="titleContent">
-                  <strong>{playingVideo.snippet.title} </strong>
+                  <strong>{useContextData.playingVideo.snippet.title} </strong>
                   <button
                     className="seeless"
                     onClick={() => {
@@ -120,7 +116,9 @@ const VideoPlay = () => {
                 </div>
               ) : (
                 <div className="titleContent">
-                  <strong>{playingVideo.snippet.title.slice(0, 46)}...</strong>
+                  <strong>
+                    {useContextData.playingVideo.snippet.title.slice(0, 46)}...
+                  </strong>
                   <button
                     className="seeless"
                     onClick={() => {
@@ -134,8 +132,8 @@ const VideoPlay = () => {
             </div>
             <div>
               <strong>
-                {myGlobalObj.CalculateLikeAndComment(
-                  playingVideo.statistics.commentCount
+                {useContextData.CalculateLikeAndComment(
+                  useContextData.playingVideo.statistics.commentCount
                 )}
                 {" Comments.."}
               </strong>
@@ -143,19 +141,19 @@ const VideoPlay = () => {
           </div>
 
           <div className="right-list">
-            {relaventData.map((obj) => {
+            {useContextData.relaventData.slice(0, 4).map((obj, i) => {
               return (
                 <div
                   key={obj.id}
                   className="one-video-cate"
                   onClick={() => {
-                    setPlayVideo({ ...obj });
+                    useContextData.setPlayingVideo({ ...obj });
                   }}
                 >
                   <div className="imgsearch">
                     <img src={obj.snippet.thumbnails.high.url} alt="" />
                     <strong id="durations">
-                      {myGlobalObj.parseISO8601Duration(
+                      {useContextData.parseISO8601Duration(
                         obj.contentDetails.duration
                       )}
                     </strong>
@@ -178,13 +176,14 @@ const VideoPlay = () => {
                     </div>
                     <div className="viewMonth">
                       <strong>
-                        {myGlobalObj.calculateViewCounts(
+                        {useContextData.calculateViewCounts(
                           obj.statistics.viewCount
                         )}
                         .
                       </strong>
                       <strong>
-                        {myGlobalObj.calculateTime(obj.snippet.publishedAt)} ago
+                        {useContextData.calculateTime(obj.snippet.publishedAt)}{" "}
+                        ago
                       </strong>
                     </div>
                   </div>

@@ -1,62 +1,26 @@
 import axios from "axios";
-import MyContext from "./GlobalContext";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useMyContextFuncs } from "../myContext/MyContext";
+
 const CategoryData = () => {
   const [data, setData] = useState([]);
-  const myGlobalObj = useContext(MyContext);
+  const useContextData = useMyContextFuncs();
   const navigator = useNavigate();
-  // console.log(myGlobalObj);
+  const api_key = process.env.REACT_APP_API_KEY;
+  const apiUrlForCategory = `https://www.googleapis.com/youtube/v3/search?key=${api_key}&part=snippet&type=video&videoCategoryId=${useContextData.categoryId}&maxResults=15`;
+  console.log(useContextData);
 
-  const api_key = process.env.REACT_APP_UTUBEKEY;
-  const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${api_key}&part=snippet&type=video&videoCategoryId=${myGlobalObj.categoryId}&maxResults=15`;
-  function fetchLogos(updateData) {
-    return new Promise((resolve, reject) => {
-      const collOfIds = [];
-
-      for (let i = 0; i < updateData.length; i++) {
-        collOfIds.push(updateData[i].snippet.channelId);
-      }
-      // console.log(collOfIds);
-
-      axios
-        .get(
-          `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${collOfIds.toString()}&key=${api_key}`
-        )
-        .then((response) => {
-          console.log(response.data.items);
-          for (let i = 0; i < response.data.items.length; i++) {
-            updateData[i].channelLogo =
-              response.data.items[i].snippet.thumbnails.default.url;
-          }
-
-          // localStorage.setItem(
-          //   "updatedDataForCategory",
-          //   JSON.stringify(updateData)
-          // );
-          // fetchVideosTogetViewsAndcontentDetails(updateData);
-          // setData(updateData);
-          resolve(updateData);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-  }
   function fetchVideosTogetViewsAndcontentDetails(dataToUpadate) {
-    // console.log(dataToUpadate);
     const newArrForIds = [];
     for (let i = 0; i < dataToUpadate.length; i++) {
       newArrForIds.push(dataToUpadate[i].id.videoId);
     }
     const apiTOviewCount = `https://www.googleapis.com/youtube/v3/videos?key=${api_key}&part=snippet,statistics,contentDetails&id=${newArrForIds.toString()}`;
-    // console.log(newArrForIds);
-
     return new Promise((resolve, reject) => {
       axios
         .get(apiTOviewCount)
         .then((response) => {
-          // console.log(response);
           localStorage.setItem(
             "viewcountArr",
             JSON.stringify(response.data.items)
@@ -67,7 +31,6 @@ const CategoryData = () => {
             dataToUpadate[i].contentDetails =
               response.data.items[i].contentDetails;
           }
-          // setData([...dataToUpadate]);
           localStorage.setItem(
             "categoryDataFinal",
             JSON.stringify(dataToUpadate)
@@ -80,16 +43,19 @@ const CategoryData = () => {
         });
     });
   }
+
   function fetchDataAccToCategory() {
+    console.log(useContextData);
     return new Promise((resolve, reject) => {
       axios
-        .get(apiUrl)
+        .get(apiUrlForCategory)
         .then((response) => {
           localStorage.setItem(
             "dataForCategoryWithoutLogo",
             JSON.stringify(response.data.items)
           );
           resolve(response.data.items);
+          console.log(response.data.items);
         })
         .catch((error) => {
           console.log(error);
@@ -97,6 +63,22 @@ const CategoryData = () => {
         });
     });
   }
+  async function handlepromise() {
+    try {
+      const data = await fetchDataAccToCategory();
+      const updatedData = await useContextData.fetchLogosOfChannels(data);
+      const newData = await fetchVideosTogetViewsAndcontentDetails(updatedData);
+      setData(newData);
+
+      localStorage.setItem(
+        "DataOncategoryAfterLogoandVies",
+        JSON.stringify(newData)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  // --------------------------------------------------
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("DataOncategoryAfterLogoandVies"))) {
       setData(
@@ -104,25 +86,12 @@ const CategoryData = () => {
       );
       console.log("local storage working in categorydata fianl");
     } else {
-      async function handlepromise() {
-        const data = await fetchDataAccToCategory();
-        console.log(data);
-        const updatedData = await myGlobalObj.fetchLogosOfChannels(data);
-        const newData = await fetchVideosTogetViewsAndcontentDetails(
-          updatedData
-        );
-
-        localStorage.setItem(
-          "DataOncategoryAfterLogoandVies",
-          JSON.stringify(newData)
-        );
-        console.log(newData);
-        setData(newData);
-      }
+      console.log(useContextData);
       handlepromise();
     }
-  }, [myGlobalObj.categoryId]);
+  }, [useContextData.categoryId]);
 
+  // ---------------------------------------------------------
   console.log(data);
   return (
     <div id="mainT">
@@ -133,23 +102,28 @@ const CategoryData = () => {
               key={obj.id}
               className="onevideobox"
               onClick={() => {
-                myGlobalObj.playingVideo = obj;
-                myGlobalObj.relaventData = data;
+                useContextData.setPlayingVideo(obj);
+                useContextData.setRelaventData(data);
 
                 navigator(`/VideoPlay`);
               }}
             >
-              <div>
+              <div style={{ position: "relative" }}>
                 <img src={obj.snippet.thumbnails.high.url} className="imges" />
-              </div>
-              <div id="duration">
-                <p id="durP">
-                  {obj.contentDetails &&
-                    myGlobalObj.parseISO8601Duration(
+                <div className="duration-class">
+                  <p id="durP">
+                    {console.log(
+                      useContextData.parseISO8601Duration(
+                        obj.contentDetails.duration
+                      )
+                    )}
+                    {useContextData.parseISO8601Duration(
                       obj.contentDetails.duration
                     )}
-                </p>
+                  </p>
+                </div>
               </div>
+
               <div className="homelogotitle">
                 <div className="channelimglogo">
                   <img className="channel-logo" src={obj.urllogo} alt="" />
@@ -161,10 +135,12 @@ const CategoryData = () => {
               </div>
               <div id="flexDiv">
                 <p>
-                  {myGlobalObj.calculateViewCounts(obj.statistics.viewCount)} .
+                  {useContextData.calculateViewCounts(obj.statistics.viewCount)}{" "}
+                  .
                 </p>
                 <p>
-                  {myGlobalObj.calculateTime(obj.snippet.publishedAt) + " "} ago
+                  {useContextData.calculateTime(obj.snippet.publishedAt) + " "}{" "}
+                  ago
                 </p>
               </div>
             </div>

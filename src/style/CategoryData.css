@@ -1,0 +1,46 @@
+.duration-class {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 10000;
+}
+.duration-class #durP {
+  color: white;
+}
+
+.logochannel {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.logochannel img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.viewMonth {
+  border: 2px solid black;
+  font-size: 13px;
+  display: flex;
+  gap: 10px;
+  margin: 2px 0px;
+}
+.channelLogo {
+  border: 2px solid green;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .one-video-cate {
+    grid-template-columns: 1fr;
+  }
+  .imgsearch {
+    width: 100%;
+    height: 300px;
+  }
+}

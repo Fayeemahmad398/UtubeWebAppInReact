@@ -1,0 +1,161 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f2f2f2;
+  font-family:  sans-serif;
+}
+
+#mainT {
+  background-color: #fff;
+  padding: 8px;
+  margin-top: 120px;
+  /* border: 2px solid rgb(35, 82, 238); */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+}
+/* ------------------------------------------- */
+
+.imges {
+  width: 100%;
+  height: 200px;
+  border-radius: 20px;
+  /* margin-bottom: 10px; */
+}
+.onevideobox {
+  width: 95%;
+  border: 2px solid black;
+  padding: 5px;
+  margin: 20px 0px;
+  background: #efe8e8;
+  border-radius: 20px;
+  position: relative;
+}
+#trendVdo #mainT img {
+  width: 290px;
+  height: 160px;
+}
+#trendVdo #mainT h3 {
+  font-size: 14px;
+  margin: 6px 0;
+  height: 35px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+.channel-logo {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+#flexDiv {
+  margin-top: 5px;
+  display: flex;
+  font-size: 14px !important;
+  margin-left: 55px;
+}
+#duration {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+  margin-top: -30px;
+}
+#duration #durP {
+  color: #f2f2f2;
+  font-size: 12px;
+  border-radius: 4px;
+  background-color: #070a12;
+  padding: 2px 4px;
+}
+#filter-main {
+  width: 400px;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  margin-top: 20px;
+  /* display: none; */
+  margin-left: 16px;
+}
+#filter-main #one {
+  display: flex;
+  gap: 10px;
+  width: min-content;
+  margin-bottom: 28px;
+  align-items: center;
+}
+#one h3 {
+  color: #1a1919;
+}
+#filter-main img {
+  width: 28px;
+  height: 28px;
+}
+#filter-main #two {
+  display: flex;
+  width: 600px;
+  justify-content: space-between;
+}
+#filter-main h4 {
+  color: rgb(42, 41, 41);
+  margin-bottom: 12px;
+  /* border-bottom: 1px solid lightgray; */
+}
+#filter-main p {
+  color: #6b6969;
+  margin: 14px 0;
+  font-size: 16px;
+}
+#zero {
+  display: none;
+}
+.channelimglogo {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 2px solid red;
+  gap: 10px;
+}
+.channelsName {
+  font-size: 14px !important;
+  margin-left: 55px;
+}
+
+.homelogotitle {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 850px) {
+  #mainT {
+    grid-template-columns: 1fr 1fr;
+  }
+  #mic {
+    display: none;
+  }
+
+  #search {
+    width: 70% !important;
+  }
+}
+@media (max-width: 450px) {
+  #mainT {
+    grid-template-columns: 1fr;
+  }
+  .imges {
+    height: 200px;
+    border-radius: 0px;
+  }
+  .onevideobox {
+    width: 100%;
+    padding: 0px;
+    border-radius: 0px;
+    margin-top: 5px;
+  }
+  #mainT {
+    padding: 0px;
+  }
+  
+}

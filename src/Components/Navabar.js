@@ -3,9 +3,10 @@ import { useNavigate } from "react-router";
 import { useMyContextFuncs } from "../myContext/MyContext";
 import "../style/navbar.css";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-
+import LoadingBar from "react-top-loading-bar";
 const Navbar = () => {
   const navigator = useNavigate();
+  const { progress, setProgress } = useMyContextFuncs();
 
   const { searchTerm, setSearchTerm } = useMyContextFuncs();
 
@@ -18,6 +19,14 @@ const Navbar = () => {
 
   return (
     <div>
+      <LoadingBar
+        shadowStyle={{ background: "red" }}
+        height={3}
+        color="#f11946"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+        shadow={true}
+      />
       <div id="navbar">
         <div id="navbar-left">
           <div id="utubelogo">
@@ -31,7 +40,7 @@ const Navbar = () => {
 
         <div id="navbar-mid">
           <input
-            type="text"
+            type="search"
             value={searchTerm}
             placeholder="Search"
             id="search"

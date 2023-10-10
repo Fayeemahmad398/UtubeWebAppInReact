@@ -17,7 +17,8 @@ const SearchDataOnQuery = () => {
     parseISO8601Duration,
     calculateTime,
     calculateViewCounts,
-    fetchLogosOfChannels
+    fetchLogosOfChannels,
+    setProgress,
   } = useMyContextFuncs();
   // End points with base url
   const searchUrl = `https://www.googleapis.com/youtube/v3/search`;
@@ -89,21 +90,28 @@ const SearchDataOnQuery = () => {
       const dataOnVideosIds = await findDataOnVideoIdsToviewsAndLike(data);
       //to get viewcount/likecount/duration (contentdetails/statistics)
       const searchDataWithLogo = await fetchLogosOfChannels(dataOnVideosIds);
+      setProgress(100);
 
       setData(searchDataWithLogo);
     } catch (error) {
-      toast.error(`Unexpected  Error is: ${error.code}`, {
-        style: {
-          color: "red",
-        },
-      });
+      setProgress(100);
 
-      console.log(error.code);
+      toast.error(
+        `Unexpected  Error is:${
+          error?.response?.data?.error?.errors[0]?.reason ?? error.message
+        } `,
+        {
+          style: {
+            color: "red",
+          },
+        }
+      );
     }
   }
 
   useEffect(() => {
     handleAyncFunc();
+    setProgress(10);
   }, [searchVal]);
 
   return (

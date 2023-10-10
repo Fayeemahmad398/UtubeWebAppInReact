@@ -15,6 +15,7 @@ const Home = () => {
     setPlayingVideo,
     setRelaventData,
     fetchLogosOfChannels,
+    setProgress,
   } = useMyContextFuncs();
 
   const api_key = process.env.REACT_APP_API_KEY;
@@ -56,14 +57,20 @@ const Home = () => {
         JSON.stringify(defaultData1)
       );
       setVideos(defaultData1);
+      setProgress(100);
     } catch (error) {
-      toast.error(`Unexpected  Error is: ${error.code}`, {
-        style: {
-          color: "red",
-        },
-      });
+      setProgress(100);
 
-      console.log(error.code);
+      toast.error(
+        `Unexpected  Error is:${
+          error?.response?.data?.error?.errors[0]?.reason ?? error.message
+        }`,
+        {
+          style: {
+            color: "red",
+          },
+        }
+      );
     }
   }
 
@@ -76,6 +83,7 @@ const Home = () => {
     } else {
       console.log("api working for trending");
       handleTrendingPromise();
+      setProgress(10);
     }
   }, []);
 

@@ -38,20 +38,29 @@ const AllCategory = () => {
   async function handlePromise() {
     try {
       const data = await callToApiForCategory();
-      setAllCategories(data);
-    } catch (error) {
-      toast.error(`Unexpected  Error is: ${error.code}`, {
-        style: {
-          color: "red",
-        },
-      });
 
-      console.log(error.code);
+      setAllCategories(data);
+
+      useContextData.setProgress(() => 100);
+    } catch (error) {
+      useContextData.setProgress(() => 100);
+
+      toast.error(
+        `Unexpected  Error is:${
+          error?.response?.data?.error?.errors[0]?.reason ?? error.message
+        }`,
+        {
+          style: {
+            color: "red",
+          },
+        }
+      );
     }
   }
 
   useEffect(() => {
     handlePromise();
+    useContextData.setProgress((prev) => prev + 20);
   }, []);
 
   function handleLeft() {

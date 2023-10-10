@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+
 import {
   fetchLogosOfChannels,
   calculateViewCounts,
@@ -11,12 +12,15 @@ import { useContext } from "react";
 const useMyContext = createContext();
 
 function MyContext({ children }) {
+  const [progress, setProgress] = useState(0)
   const [searchTerm, setSearchTerm] = useState("");
 
   const [playingVideo, setPlayingVideo] = useState(""); //video obj to play in iframe
   const [relaventData, setRelaventData] = useState([]); //during playing video other data would be show aside
 
   const values = {
+    progress:progress,
+    setProgress:setProgress,
     searchTerm: searchTerm,
     relaventData: relaventData,
     playingVideo: playingVideo,

@@ -13,6 +13,7 @@ const CategoryData = () => {
     setRelaventData,
     calculateViewCounts,
     fetchLogosOfChannels,
+    setProgress,
   } = useMyContextFuncs();
   const navigator = useNavigate();
   const { categoryId } = useParams();
@@ -88,20 +89,28 @@ const CategoryData = () => {
       const data = await fetchDataAccToCategory();
       const updatedData = await fetchLogosOfChannels(data);
       const newData = await fetchVideosTogetViewsAndcontentDetails(updatedData);
+      setProgress(100);
       setData(newData);
     } catch (error) {
-      toast.error(`Unexpected  Error is: ${error.code}`, {
-        style: {
-          color: "red",
-        },
-      });
+      console.log(error);
+      setProgress(100);
+      toast.error(
+        `Unexpected  Error is:${
+          error?.response?.data?.error?.errors[0]?.reason ?? error.message
+        }`,
 
-      console.log(error.code);
+        {
+          style: {
+            color: "red",
+          },
+        }
+      );
     }
   }
 
   useEffect(() => {
     handlepromise();
+    setProgress(10);
   }, [categoryId]);
 
   return (

@@ -4,6 +4,8 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import { useMyContextFuncs } from "../myContext/MyContext";
 import "../style/allCategory.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AllCategory = () => {
   const [allCategories, setAllCategories] = useState([]);
@@ -21,8 +23,9 @@ const AllCategory = () => {
         )
         .then((response) => {
           if (response.status === 200) {
-            console.log(response.data.items);
             return resolve(response.data.items);
+          } else {
+            reject({ code: response.status });
           }
         })
         .catch((error) => {
@@ -31,21 +34,24 @@ const AllCategory = () => {
         });
     });
   }
-  async function handlePromise() {
-    const data = await callToApiForCategory();
-    localStorage.setItem("foundCategory", JSON.stringify(data));
 
-    setAllCategories(data);
+  async function handlePromise() {
+    try {
+      const data = await callToApiForCategory();
+      setAllCategories(data);
+    } catch (error) {
+      toast.error(`Unexpected  Error is: ${error.code}`, {
+        style: {
+          color: "red",
+        },
+      });
+
+      console.log(error.code);
+    }
   }
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("foundCategory"))) {
-      setAllCategories(JSON.parse(localStorage.getItem("foundCategory")));
-
-      console.log("working local for category all");
-    } else {
-      handlePromise();
-    }
+    handlePromise();
   }, []);
 
   function handleLeft() {
@@ -76,7 +82,7 @@ const AllCategory = () => {
             style={{ transform: `translateX(-${slideValue}00%)` }}
             onClick={() => {
               useContextData.categoryId = obj.id;
-              navigator("/CategoryData");
+              navigator(`/CategoryData/${obj.id}`);
             }}
           >
             <strong style={{ width: "120px", textAlign: "center" }}>
@@ -89,7 +95,7 @@ const AllCategory = () => {
       <button
         className="btnsarrow right"
         onClick={handleRight}
-        disabled={slideValue == 37}
+        disabled={slideValue == allCategories.length}
       >
         <FaAngleRight className="arrows" />
       </button>

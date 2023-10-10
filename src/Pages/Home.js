@@ -1,62 +1,86 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import {
-  calculateViewCounts,
-  calculateTime,
-  parseISO8601Duration,
-} from "../CommonFunctions/commonFuncs";
 
 import { useMyContextFuncs } from "../myContext/MyContext";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
+  const navigator = useNavigate();
+  const {
+    parseISO8601Duration,
+    calculateTime,
+    calculateViewCounts,
+    setPlayingVideo,
+    setRelaventData,
+    fetchLogosOfChannels,
+  } = useMyContextFuncs();
 
   const api_key = process.env.REACT_APP_API_KEY;
 
-  const urlForTrending = `https://www.googleapis.com/youtube/v3/videos?key=${api_key}
-  &part=snippet,statistics,contentDetails&chart=mostPopular&maxResults=12&regionCode=IN`;
-
-  const navigator = useNavigate();
-  const useContextData = useMyContextFuncs();
+  // base url with endpoint videos
+  const urlForTrending = `https://www.googleapis.com/youtube/v3/videos`;
+  let trendingUrlParams = {
+    key: `${api_key}`,
+    part: "snippet,statistics,contentDetails",
+    chart: "mostPopular",
+    maxResults: 15,
+    regionCode: `IN`,
+  };
 
   function FetchTrendingData() {
     return new Promise((resolve, reject) => {
       axios
-        .get(urlForTrending)
+        .get(urlForTrending, { params: trendingUrlParams })
         .then((response) => {
           if (response.status == 200) {
             console.log(response.status);
             resolve(response.data.items);
+          } else {
+            reject({ code: response.status });
           }
         })
         .catch((error) => {
-          console.log(error);
           reject(error);
         });
     });
   }
 
   async function handleTrendingPromise() {
-    const defaultData = await FetchTrendingData(); //fetching trending videos
-    const defaultData1 = await useContextData.fetchLogosOfChannels(defaultData); //fetching logos for channels
-    localStorage.setItem("trendingDataWithLogo", JSON.stringify(defaultData1));
-    setVideos(defaultData1);
+    try {
+      const defaultData = await FetchTrendingData(); //fetching trending videos
+      const defaultData1 = await fetchLogosOfChannels(defaultData); //fetching logos for channels
+      sessionStorage.setItem(
+        "trendingDataWithLogo",
+        JSON.stringify(defaultData1)
+      );
+      setVideos(defaultData1);
+    } catch (error) {
+      toast.error(`Unexpected  Error is: ${error.code}`, {
+        style: {
+          color: "red",
+        },
+      });
+
+      console.log(error.code);
+    }
   }
 
   // -----------------------------------------------
-  
+
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("trendingDataWithLogo"))) {
-      setVideos(JSON.parse(localStorage.getItem("trendingDataWithLogo")));
-      console.log("Local working for trending Data");
+    if (JSON.parse(sessionStorage.getItem("trendingDataWithLogo"))) {
+      setVideos(JSON.parse(sessionStorage.getItem("trendingDataWithLogo")));
+      console.log("session working for trending Data");
     } else {
       console.log("api working for trending");
       handleTrendingPromise();
     }
   }, []);
-  console.log(videos)
-  // ---------------------------------------
+
+  console.log(videos);
+  // --------------------------------------------
   return (
     <div id="mainT">
       {videos.length > 0 &&
@@ -66,12 +90,12 @@ const Home = () => {
               key={obj.id}
               className="onevideobox"
               onClick={() => {
-                useContextData.setPlayingVideo(obj);
-                useContextData.setRelaventData(videos);
+                setPlayingVideo(obj);
+                setRelaventData(videos);
                 navigator(`/VideoPlay`);
               }}
             >
-              <div >
+              <div>
                 <img src={obj.snippet.thumbnails.high.url} className="imges" />
               </div>
               <div id="duration">
@@ -82,7 +106,7 @@ const Home = () => {
               </div>
               <div className="homelogotitle">
                 <div className="channelimglogo">
-                  <img className="channel-logo" src={obj.urllogo} alt="" />
+                  <img className="channel-logo" src={obj.urllogo} alt="NA" />
                   <h5 className="title-of-video">{obj.snippet.title}</h5>
                 </div>
                 <div className="channelNameOnHome">

@@ -1,25 +1,55 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useMyContextFuncs } from "../myContext/MyContext";
+import { toast } from "react-toastify";
 
 const SearchDataOnQuery = () => {
+  const { searchVal } = useParams();
+
+  console.log(searchVal);
   const navigator = useNavigate();
   const [Data, setData] = useState([]);
   const api_key = process.env.REACT_APP_API_KEY;
-  const useContextData = useMyContextFuncs();
+  const {
+    setPlayingVideo,
+    setRelaventData,
+    parseISO8601Duration,
+    calculateTime,
+    calculateViewCounts,
+    fetchLogosOfChannels
+  } = useMyContextFuncs();
+  // End points with base url
+  const searchUrl = `https://www.googleapis.com/youtube/v3/search`;
+  const videoUrl = `https://www.googleapis.com/youtube/v3/videos`;
 
-  const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${api_key}
-  &part=snippet&type=video&q=${useContextData.searchTerm}&maxResults=${15}`;
+  // params of different endpoints
 
+  let searchParams = {
+    key: `${api_key}`,
+    q: `${searchVal}`,
+    part: "snippet",
+    type: "video",
+    maxResults: "15",
+  };
+
+  let videosParams = {
+    key: `${api_key}`,
+    part: "snippet,statistics,contentDetails",
+  };
+
+  // -------------------------------------------
+  // Fetching info with search end point
   function findResultsOnSearch() {
     return new Promise((resolve, reject) => {
       axios
-        .get(searchUrl)
+        .get(searchUrl, { params: searchParams })
         .then((response) => {
           if (response.status == 200) {
-            resolve([...response.data.items]); //did not
+            resolve([...response.data.items]);
             console.log(response.data.items);
+          } else {
+            reject({ code: response.status });
           }
         })
         .catch((error) => {
@@ -28,53 +58,53 @@ const SearchDataOnQuery = () => {
         });
     });
   }
-
+  // fetching info with video end point
   function findDataOnVideoIdsToviewsAndLike(data) {
     const newArrForIds = [];
     data.forEach((obj) => {
       newArrForIds.push(obj.id.videoId);
     });
 
-    console.log(newArrForIds);
-    const videoDetailsUrl = `https://www.googleapis.com/youtube/v3/videos?key=${api_key}&part=snippet,statistics,contentDetails&id=${newArrForIds.toString()}`;
+    videosParams.id = newArrForIds.toString();
 
     return new Promise((resolve, reject) => {
       axios
-        .get(videoDetailsUrl)
+        .get(videoUrl, { params: videosParams })
         .then((response) => {
-          console.log(response.data.items);
-          resolve(response.data.items);
+          if (response.status == 200) {
+            resolve(response.data.items);
+          } else {
+            reject({ code: response.status });
+          }
         })
         .catch((error) => {
           reject(error);
-          console.log(error);
         });
     });
   }
 
   async function handleAyncFunc() {
-    const data = await findResultsOnSearch(); //gets videos ids and other
+    try {
+      const data = await findResultsOnSearch();
+      const dataOnVideosIds = await findDataOnVideoIdsToviewsAndLike(data);
+      //to get viewcount/likecount/duration (contentdetails/statistics)
+      const searchDataWithLogo = await fetchLogosOfChannels(dataOnVideosIds);
 
-    const dataOnVideosIds = await findDataOnVideoIdsToviewsAndLike(data);
-    //to get viewcount/likecount/duration (contentdetails/statistics)
-    const searchDataWithLogo = await useContextData.fetchLogosOfChannels(
-      dataOnVideosIds
-    );
+      setData(searchDataWithLogo);
+    } catch (error) {
+      toast.error(`Unexpected  Error is: ${error.code}`, {
+        style: {
+          color: "red",
+        },
+      });
 
-    localStorage.setItem("searchFinalData", JSON.stringify(searchDataWithLogo));
-    setData(searchDataWithLogo);
+      console.log(error.code);
+    }
   }
-  // -----------------------------------------------------------------
 
   useEffect(() => {
-    if (localStorage.getItem("searchFinalData")) {
-      console.log("localWorkingfor searchresult");
-      setData(JSON.parse(localStorage.getItem("searchFinalData")));
-    } else {
-      handleAyncFunc();
-    }
-  }, []);
-  // -----------------------------------------------------------------
+    handleAyncFunc();
+  }, [searchVal]);
 
   return (
     <div className="category-data">
@@ -84,17 +114,15 @@ const SearchDataOnQuery = () => {
             key={obj.id}
             className="video-box-here"
             onClick={() => {
-              useContextData.setPlayingVideo(obj);
-              useContextData.setRelaventData(Data);
+              setPlayingVideo(obj);
+              setRelaventData(Data);
               navigator("/VideoPlay");
             }}
           >
             <div className="img-inner-side">
               <img src={obj.snippet.thumbnails.high.url} alt="" />
               <strong className="durationsOnSearch">
-                {useContextData.parseISO8601Duration(
-                  obj.contentDetails.duration
-                )}
+                {parseISO8601Duration(obj.contentDetails.duration)}
               </strong>
             </div>
 
@@ -102,12 +130,9 @@ const SearchDataOnQuery = () => {
               <h5>{obj.snippet.title}</h5>
               <div className="viewMonth">
                 <strong>
-                  {useContextData.calculateViewCounts(obj.statistics.viewCount)}
-                  .
+                  {calculateViewCounts(obj.statistics.viewCount)}.
                 </strong>
-                <strong>
-                  {useContextData.calculateTime(obj.snippet.publishedAt)} ago
-                </strong>
+                <strong>{calculateTime(obj.snippet.publishedAt)} ago</strong>
               </div>
               <div className="channelLogo">
                 <div className="logochannel">
@@ -120,7 +145,9 @@ const SearchDataOnQuery = () => {
                     alt=""
                   />
                 </div>
-                <strong className="channel-name-">{obj.snippet.channelTitle}</strong>
+                <strong className="channel-name-">
+                  {obj.snippet.channelTitle}
+                </strong>
               </div>
               <p className="descriptions">
                 {obj.snippet.description.slice(0, 100).replaceAll("#", " ")}...

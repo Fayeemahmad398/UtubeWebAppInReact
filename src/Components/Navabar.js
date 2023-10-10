@@ -1,4 +1,4 @@
-import { FaMicrophone, FaSearch, FaToggleOn } from "react-icons/fa";
+import { FaMicrophone, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import { useMyContextFuncs } from "../myContext/MyContext";
 import "../style/navbar.css";
@@ -7,12 +7,12 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 const Navbar = () => {
   const navigator = useNavigate();
 
-  const useContextData = useMyContextFuncs();
+  const { searchTerm, setSearchTerm } = useMyContextFuncs();
 
   function handleKeysDown(event) {
-    console.log(useContextData);
+    console.log(event.key);
     if (event.key == "Enter") {
-      navigator("/SearchDataOnQuery");
+      if (searchTerm.trim()) navigator(`/SearchDataOnQuery/${searchTerm}`);
     }
   }
 
@@ -32,20 +32,22 @@ const Navbar = () => {
         <div id="navbar-mid">
           <input
             type="text"
-            value={useContextData.searchTerm}
+            value={searchTerm}
             placeholder="Search"
             id="search"
             onChange={(event) => {
-              useContextData.setSearchTerm(event.target.value);
+              setSearchTerm(event.target.value);
             }}
             onKeyDown={(event) => {
               handleKeysDown(event);
             }}
           />
+
           <button
             id="find"
             onClick={() => {
-              navigator("/SearchDataOnQuery");
+              if (searchTerm.trim())
+                navigator(`/SearchDataOnQuery/${searchTerm}`);
             }}
           >
             <FaSearch />
@@ -74,7 +76,7 @@ const Navbar = () => {
               justifyContent: "center",
               alignItems: "center",
               background: "black",
-              borderRadius:"100%"
+              borderRadius: "100%",
             }}
           >
             <h4 id="alpha">F</h4>

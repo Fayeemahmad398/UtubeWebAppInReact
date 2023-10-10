@@ -56,7 +56,6 @@ export const calculateTime = (timeInUTC) => {
 export const parseISO8601Duration = (duration) => {
   const matches = duration.match(/[0-9]+[HMS]/g);
 
-  console.log(matches);
   let timeString = "";
   if (matches) {
     matches.forEach((match) => {
@@ -68,7 +67,6 @@ export const parseISO8601Duration = (duration) => {
       else if (unit === "S") timeString += value + " secs ";
     });
   }
-  console.log(timeString);
   return timeString.trim();
 };
 

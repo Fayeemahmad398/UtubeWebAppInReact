@@ -48,7 +48,6 @@
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   font-size: 17px;
-
 }
 #navbar-mid button {
   height: 40px;
@@ -63,7 +62,7 @@
   padding: 10px;
   margin-left: 10px;
 }
-#navbar-mid #mic :hover{
+#navbar-mid #mic :hover {
   cursor: pointer;
 }
 /* ------------------------------ */
@@ -86,7 +85,6 @@
 
 #navbar-right #alpha {
   color: white;
- 
 }
 /* ------------------------------- */
 @media (max-width: 500px) {

@@ -3,7 +3,7 @@
   grid-template-columns: 1.5fr 1fr;
   width: 95%;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 120px;
 }
 iframe {
   margin-top: 20px;
@@ -122,7 +122,9 @@ h5 {
   font-size: small;
   gap: 3px;
 }
-
+.border-apply {
+  border: 3px solid red;
+}
 .purchase {
   font-size: 19px;
 }
@@ -145,7 +147,7 @@ h5 {
   padding: 0px;
   transition: 1s;
 }
-.one-video-cate:hover{
+.one-video-cate:hover {
   transform: scale(1.03);
 }
 #durations {

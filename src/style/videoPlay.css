@@ -221,3 +221,13 @@ h5 {
     font-size: 14px;
   }
 }
+
+@media (max-width: 500px) {
+  .one-video-cate {
+    grid-template-columns: 1fr;
+  }
+
+  .imgsearch {
+    width: 100%;
+  }
+}
